@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "shared_execution": "http-request",
   "name": "공동 편집 · Agent 활동",
   "frontend": {"directory": "public"},
   "services": ["postgres"],

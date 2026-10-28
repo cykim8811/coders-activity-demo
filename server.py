@@ -11,8 +11,9 @@ from pydantic import BaseModel, Field
 
 
 @asynccontextmanager
-async def lifespan(app):
+async def database():
     async with await psycopg.AsyncConnection.connect(os.environ["DATABASE_URL"]) as db:
+        await db.execute("SELECT pg_advisory_xact_lock(7301028)")
         await db.execute("""
             CREATE TABLE IF NOT EXISTS demo_document(id integer PRIMARY KEY, title text NOT NULL);
             INSERT INTO demo_document VALUES(1,'함께 편집하는 문서') ON CONFLICT DO NOTHING;
@@ -20,10 +21,10 @@ async def lifespan(app):
                 action_id uuid PRIMARY KEY, title text NOT NULL, actor_label text NOT NULL,
                 notified boolean NOT NULL DEFAULT false);
         """)
-    yield
+        yield db
 
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI()
 
 
 class Save(BaseModel):
@@ -34,7 +35,7 @@ class Save(BaseModel):
 
 @app.get("/state")
 async def state():
-    async with await psycopg.AsyncConnection.connect(os.environ["DATABASE_URL"]) as db:
+    async with database() as db:
         row = await (await db.execute("SELECT title FROM demo_document WHERE id=1")).fetchone()
     return {
         "document": {"id": "document:1", "title": row[0]},
@@ -52,7 +53,7 @@ async def state():
 
 @app.put("/save")
 async def save(body: Save):
-    async with await psycopg.AsyncConnection.connect(os.environ["DATABASE_URL"]) as db:
+    async with database() as db:
         # 변경과 발행 대기를 같은 트랜잭션에 기록합니다. 재시도에는 같은 action_id를 사용합니다.
         inserted = await (
             await db.execute(
@@ -76,7 +77,7 @@ async def save(body: Save):
     if pending:
         try:
             if await notify(body):
-                async with await psycopg.AsyncConnection.connect(os.environ["DATABASE_URL"]) as db:
+                async with database() as db:
                     await db.execute(
                         "UPDATE demo_saves SET notified=true WHERE action_id=%s", (body.action_id,)
                     )
