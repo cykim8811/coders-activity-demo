@@ -1,0 +1,19 @@
+name: Build activity example
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+  attestations: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cykim8811/coders-fast-start@3de8bc896f7fcd3a301fc09d7b321ec2d0c13f45
+        with:
+          runtime: python-3.12
+          start: uvicorn server:app --host 0.0.0.0 --port 8080

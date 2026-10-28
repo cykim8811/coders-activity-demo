@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>함께 쓰기 · Coders</title><link rel="stylesheet" href="/style.css"><script src="/app.js" type="module"></script></head>
+<body><main>
+<header><a class="brand" href="https://dev.coders.kr/activity.html" target="_blank" rel="noopener">/c <span>LAB</span></a><span class="badge">브라우저 + Agent</span></header>
+<div class="intro"><p class="eyebrow">ONE WORKSPACE, ONE DOCUMENT</p><h1>같은 문서를,<br>함께 수정합니다.</h1><p>브라우저에서 저장하거나 Agent에게 수정을 맡겨보세요.<br>변경된 문서와 활동이 열린 화면에 바로 반영됩니다.</p></div>
+<div class="columns"><section class="document" data-coders-target="document:1"><div class="section-head"><span class="eyebrow">SHARED DOCUMENT</span><span class="live-dot" aria-hidden="true"></span></div><h2 id="title">문서를 불러오고 있습니다…</h2><form><label for="document-title">문서 제목</label><input id="document-title" name="title" required maxlength="200" autocomplete="off" placeholder="함께 작성할 문서의 제목"><div class="form-footer"><span>모든 접속자가 같은 데이터를 봅니다.</span><button>저장</button></div></form><p id="connection" role="status">워크스페이스에 연결하고 있습니다.</p></section>
+<aside><section class="activity-card"><div class="section-head"><h2>실시간 활동</h2><span class="badge subtle">LIVE</span></div><p id="empty-activity">문서를 수정하면 여기에 활동이 표시됩니다.</p><ul id="activity" aria-live="polite"></ul></section><section class="agent-card"><p class="eyebrow">TRY WITH YOUR AGENT</p><h2>Agent와 연결하기</h2><p>같은 워크스페이스로 CLI를 연결하고 아래 명령을 실행하세요.</p><pre><code>python agent.py state
+python agent.py watch
+python agent.py save 'Agent가 바꾼 제목'</code></pre><a href="https://github.com/cykim8811/coders-activity-demo#agent-연결" target="_blank" rel="noopener">연결 방법과 소스 보기 ↗</a></section></aside></div>
+<footer>동일한 앱 API · 워크스페이스 PostgreSQL · Coders 활동 구독</footer>
+</main></body></html>

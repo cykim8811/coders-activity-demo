@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "name": "공동 편집 · Agent 활동",
+  "frontend": {"directory": "public"},
+  "services": ["postgres"],
+  "permissions": ["frontend"],
+  "endpoints": {
+    "state": {"path": "/state", "methods": ["GET"], "budget": "4"},
+    "save": {"path": "/save", "methods": ["PUT"], "budget": "4"}
+  }
+}
