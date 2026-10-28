@@ -29,11 +29,18 @@ def call(path, *, method="GET", data=None, key=None):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--connection", default=os.getenv("CODERS_AGENT_CONNECTION"))
     parser.add_argument("command", choices=["state", "save", "watch"])
     parser.add_argument("title", nargs="?")
     parser.add_argument("--action-id", default=str(uuid.uuid4()))
     parser.add_argument("--request-id")
     args = parser.parse_args()
+    if args.connection:
+        with open(args.connection) as source:
+            credentials = json.load(source)
+        os.environ["CODERS_APP_URL"] = credentials["app_url"]
+        os.environ["CODERS_GRANT"] = credentials["account_key"]
+        os.environ["CODERS_RESOURCE"] = credentials["resource_id"]
     if args.command == "state":
         print(json.dumps(call("/state"), ensure_ascii=False))
     elif args.command == "save":

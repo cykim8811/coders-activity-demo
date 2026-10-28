@@ -33,21 +33,30 @@ Core의 `actor`는 인증된 실행 정보를 나타내며, `actor_label`은 앱
 
 ## Agent 연결
 
-1. 데모 링크를 열고 Coders 로그인 후 워크스페이스를 생성합니다. 화면을 열어둡니다.
-2. 저장소를 받습니다: `git clone https://github.com/cykim8811/coders-activity-demo`.
-3. 아래 환경변수로 같은 사용자·워크스페이스에 연결합니다. `CODERS_APP_URL`에는 데모 링크의 전체 커밋 해시를 넣습니다. 계좌 키는 기존 Coders 계좌 인증 키입니다. 브라우저 소스나 Git에 넣지 않습니다.
+1. 데모를 열고 Coders 로그인 후 워크스페이스를 생성합니다.
+2. Coders 칩에서 **Agent 연결 → 연결 링크 만들기 → 링크 복사**를 선택합니다.
+3. Agent에게 링크를 전달합니다. Agent는 지침을 읽어 연결을 요청하고 사용자에게 승인 링크와 확인 코드를 보여줍니다.
+4. 사용자가 승인하면 같은 워크스페이스에 접속합니다. 연결 기간은 기본 **24시간**, **1시간·24시간·7일** 중 선택합니다.
+
+이 저장소의 연결 도우미를 직접 실행할 수도 있습니다.
 
 ```bash
+git clone https://github.com/cykim8811/coders-activity-demo
 cd coders-activity-demo
-export CODERS_APP_URL='https://api.coders.kr/cykim8811/coders-activity-demo/28a98ab6582b16be814b45bdc9410960cc1eb316'
-export CODERS_GRANT='<Coders 계좌 인증 키>'
-export CODERS_RESOURCE='<브라우저와 같은 워크스페이스 ID>'
-python3 agent.py state
-python3 agent.py save 'Agent가 바꾼 제목'
+python3 connect.py 'Coders 칩에서 복사한 링크' --name '내 Agent'
 ```
 
-별도 터미널에서 `python3 agent.py watch`를 실행하면 브라우저의 변경을 볼 수 있습니다.
-이 CLI는 Python 표준 라이브러리만 사용합니다. Agent도 이 명령이나 같은 HTTP API를 사용할 수 있습니다.
+승인 후 도우미가 출력한 인증 파일 경로를 CLI에 전달합니다. 키는 터미널에 출력하지 않습니다.
+
+```bash
+python3 agent.py --connection /path/to/connection.json state
+python3 agent.py --connection /path/to/connection.json watch
+python3 agent.py --connection /path/to/connection.json save 'Agent가 바꾼 제목'
+```
+
+Python 표준 라이브러리만 사용합니다. Agent도 이 명령이나 같은 HTTP API를 사용할 수 있습니다.
+인증 파일에는 승인된 앱의 고정된 커밋 주소와 워크스페이스가 포함됩니다.
+Coders의 Agent 연결 화면에서 연결을 해제할 수 있습니다.
 
 ## 확인할 수 있는 것
 
