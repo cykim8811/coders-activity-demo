@@ -1,5 +1,7 @@
 # 함께 쓰기 · Coders Agent 데모
 
+[데모 열기](https://core-v2.coders.kr/use/gh-e2ac3f0106c86b75e4fbfeabde) · [Coders 활동 규약](https://dev.coders.kr/activity.html)
+
 브라우저와 CLI가 같은 PostgreSQL 문서를 조회·수정합니다.
 저장이 완료되면 Core 활동을 발행하고, 열린 브라우저가 데이터를 재조회해 해당 문서를 강조합니다.
 
@@ -8,7 +10,7 @@ Coders에서 커밋을 준비한 뒤 워크스페이스를 만들고 PostgreSQL�
 `DATABASE_URL`과 `CODERS_URL`은 기존 Coders HTTP 실행 환경에서 제공됩니다.
 
 ```bash
-export CODERS_APP_URL='https://api.coders.kr/OWNER/REPO/FULL_COMMIT_SHA'
+export CODERS_APP_URL='https://api.coders.kr/cykim8811/coders-activity-demo/28a98ab6582b16be814b45bdc9410960cc1eb316'
 export CODERS_GRANT='<existing-account-key>'
 export CODERS_RESOURCE='<workspace-id>'
 python agent.py state
@@ -37,7 +39,7 @@ Core의 `actor`는 인증된 실행 정보를 나타내며, `actor_label`은 앱
 
 ```bash
 cd coders-activity-demo
-export CODERS_APP_URL='https://api.coders.kr/cykim8811/coders-activity-demo/FULL_COMMIT_SHA'
+export CODERS_APP_URL='https://api.coders.kr/cykim8811/coders-activity-demo/28a98ab6582b16be814b45bdc9410960cc1eb316'
 export CODERS_GRANT='<Coders 계좌 인증 키>'
 export CODERS_RESOURCE='<브라우저와 같은 워크스페이스 ID>'
 python3 agent.py state
